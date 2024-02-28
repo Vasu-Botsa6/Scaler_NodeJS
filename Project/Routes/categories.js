@@ -1,14 +1,9 @@
 const express = require('express')
-const Joi = require('joi')
-const { default: mongoose } = require('mongoose')
+const { Category, validateData} = require('../models/categoriesModel')
 
 const router = express.Router()
 
-const categorySchema = new mongoose.schema({
-    name : {type: String, required : true, minlength:3, maxlength:30}
-})
 
-const Category = new mongoose.model('Category', categorySchema)
 
 const categories = [
     {id:1, name:"Web"},
@@ -100,10 +95,5 @@ router.get('/api/categories/:id',async(req, res)=>{
     res.send(category)
 })
 
-function validateData(category){
-    const schema = {
-        name : Joi.string().min(3).required()
-    }
-    return Joi.validate(category, schema)
-}
+
 module.exports = router;
